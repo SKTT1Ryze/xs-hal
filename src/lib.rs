@@ -1,4 +1,5 @@
 //! XiangShan Hal Implementation
+//! 香山目前只有 UartLite 可用于 embedded-hal 实现
 #![no_std]
 #![feature(const_fn)]
 #![feature(const_raw_ptr_deref)]
@@ -141,6 +142,8 @@ impl serial::Write<u8> for UartLite {
     }
 }
 
+/// Clint should not in embedded-hal implementation
+/// TODO: remove it
 impl Clint {
     pub unsafe fn new() -> &'static mut Clint {
         &mut *(CLINT_MMIO as *mut Clint)
@@ -186,6 +189,8 @@ impl Clint {
 //     }
 // }
 
+// The code below should not in embedded-hal implementation
+// TODO: remove it
 pub fn hit_trap(trapcode: usize) {
     unsafe { llvm_asm!("mv a0, $0; .word 0x0005006b" :: "r"(trapcode) :: "volatile"); }
 }
