@@ -135,10 +135,15 @@ impl serial::Write<u8> for UartLite {
     }
     
     fn try_flush(&mut self) -> nb::Result<(), Self::Error> {
-        match self.stat_reg.is_set(Status::TX_EMPTY) {
-            true => Ok(()),
-            false => Err(nb::Error::WouldBlock),
-        }
+        // 这里本来应该是要根据状态寄存器的 `TX_EMPTY` 位
+        // 判断数据是否已经全部发出去
+        // 但是由于当前香山的仿真环境中不会对状态寄存器和控制寄存器
+        // 做任何事情，因此直接返回 `Ok(())`
+        // match self.stat_reg.is_set(Status::TX_EMPTY) {
+        //     true => Ok(()),
+        //     false => Err(nb::Error::WouldBlock),
+        // }
+        Ok(())
     }
 }
 
