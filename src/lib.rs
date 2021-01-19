@@ -36,6 +36,7 @@ register_structs! {
     /// |04h|Tx FIFO|send data fifo|
     /// |08h|status reg|IP 核状态寄存器|
     /// |0ch|control reg|IP 核控制寄存器|
+    #[derive(Copy)]
     pub UartLite {
         (0x00 => rx_fifo: ReadOnly<u32>),
         (0x04 => tx_fifo: ReadWrite<u32>),
@@ -58,6 +59,7 @@ register_structs! {
         (0x10 => @END),
     },
     /// Clint MMIO
+    #[derive(Copy)]
     pub Clint {
         (0x0000 => msip: [ReadWrite<u32>; 2]),
         (0x0008 => _reserved_0),
